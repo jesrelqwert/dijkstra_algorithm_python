@@ -18,7 +18,9 @@ class Graph:
             if node.nodename == nodename:
                 return node
 
-
+    def get_shortest_path(self, from_nodename, to_nodename):
+        from_node = self.get_node(from_nodename)
+        return from_node.get_shortest_path_to(to_nodename)
 
 
 class Node:
@@ -43,6 +45,40 @@ class Node:
         cost_table_str = ''.join([f'\t{node}\t{vals["cost"]}\t{vals["previous"]}\n' for node, vals in self.cost_table.items()])
 
         return f'nodename: {self.nodename}\nconnections:{self.connections}\ncost_table:\n {cost_table_header}{cost_table_str}'
+    
+    def get_shortest_path_to(self, some_node_name):
+        shortests_path = []
+        costs = []
+        total_cost = self.cost_table[some_node_name]['cost']
+
+        current_node = some_node_name[:]
+
+        for _ in range(10000):
+            shortests_path.append(current_node)
+
+            if self.cost_table[current_node]['previous'] != None:
+                costs.append(self.cost_table[current_node]['cost'] - self.cost_table[self.cost_table[current_node]['previous']]['cost'])
+
+            current_node = self.cost_table[current_node]['previous']
+
+            if current_node == None:
+                break
+
+        costs = list(reversed([str(cost) for cost in costs]))
+
+        return_str = ''
+
+        for idx, let in enumerate(reversed(shortests_path)):
+            if idx < len(costs):
+                return_str += let + f'-{costs[idx]}-> '
+            else:
+                return_str += let
+        
+        return_str += f'\ntotal cost: {total_cost}'
+
+        return return_str
+
+        
     
     def build_cost_table(self, graph):
         """
@@ -119,4 +155,6 @@ if __name__ == '__main__':
     #print(A)
 
     graph.build_cost_tables()
-    print(graph.nodes_in_graph)
+    #print(graph.nodes_in_graph)
+    #print(A.get_shortest_path_to('H'))
+    print(graph.get_shortest_path('A', 'H'))
