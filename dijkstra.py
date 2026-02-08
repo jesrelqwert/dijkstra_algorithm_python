@@ -63,6 +63,9 @@ class Node:
             if node.nodename not in self.cost_table:
                 self.cost_table[node.nodename] = {'cost':10**9, 'previous':None}
 
+        # Llenar la lista sin visitar con todos los nodenames
+        unvisited = [node.nodename for node in graph.nodes_in_graph if node.nodename != self.nodename]
+
 
 
 
