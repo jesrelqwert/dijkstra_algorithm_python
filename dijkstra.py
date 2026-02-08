@@ -35,7 +35,29 @@ class Node:
         return f'nodename: {self.nodename}\nconnections:{self.connections}\ncost_table:\n {cost_table_header}{cost_table_str}'
     
     def build_cost_table(self, graph):
-        pass
+        """
+        dijkstra
+
+        El costo del nodo a si mismo = 0
+        La tabla de costo se llena con todos los nodos en el grafo
+        La distancia a todos los nodos = 10**9 (e.g. infinito)
+
+        Repetir:
+            visita el nodo sin visitar con la distancia más corta conocida desde el nodo de comienzo
+                for current node, examine its unvisited neighbors
+                for current node, calc the distance of each neighbor from this start node
+                if the calc distance of a node is less than the current distance in the cost table, upodate the shortest distance in the cost table
+                update de previous node for each update distance
+                add the current node to the list of visited nodes and remove it ftom the list of unvisited nodes
+        untill all nodes are visited
+        """
+        visited = [self.nodename]
+
+        # Llenar la tabla de costo con los nodos restantes del grafo
+        # Se establece la distancia para todos los otros nodos = 10**9
+        for node in graph.nodes_in_graph:
+            if node.nodename not in self.cost_table:
+                self.cost_table[node.nodename] = {'cost':10**9, 'previous':None}
 
 
 
@@ -57,4 +79,7 @@ if __name__ == '__main__':
     graph = Graph()
     graph.add_nodes([A, B, C, D, E, F, G, H])
 
-    print(graph.nodes_in_graph)
+    A.build_cost_table(graph)    
+    print(A)
+
+    #print(graph.nodes_in_graph)
