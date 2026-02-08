@@ -1,3 +1,14 @@
+class Graph:
+    def __init__(self, nodes_in_graph = []):
+        self.nodes_in_graph = nodes_in_graph
+
+    def add_node(self, node):
+        self.nodes_in_graph.append(node)
+
+    def add_nodes(self, node_list):
+        for node in node_list:
+            self.add_node(node)
+
 
 
 class Node:
@@ -22,6 +33,9 @@ class Node:
         cost_table_str = ''.join([f'\t{node}\t{vals["cost"]}\t{vals["previous"]}\n' for node, vals in self.cost_table.items()])
 
         return f'nodename: {self.nodename}\nconnections:{self.connections}\ncost_table:\n {cost_table_header}{cost_table_str}'
+    
+    def build_cost_table(self, graph):
+        pass
 
 
 
@@ -31,4 +45,9 @@ if __name__ == '__main__':
     # Se definen nodos
     A = Node('A', {'B':5, 'C':7, 'D':2})
 
-    print(A)
+    #print(A)
+
+    graph = Graph()
+    graph.add_nodes([A])
+
+    print(graph.nodes_in_graph)
